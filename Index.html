@@ -1,0 +1,50 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WhatsApp Style Chat</title>
+  <style>
+    body { font-family: sans-serif; background: #eaeaea; margin: 0; }
+    .chat-box { max-width: 500px; margin: 50px auto; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0 0 5px #aaa; }
+    .msg { margin: 10px 0; }
+    .you { text-align: right; color: green; }
+    .bot { text-align: left; color: blue; }
+    input, button { padding: 10px; margin-top: 10px; width: 100%; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <div id="chat-area"></div>
+    <input id="msg-input" placeholder="Type a message...">
+    <button onclick="sendMsg()">Send</button>
+  </div>
+
+  <script>
+    function appendMsg(sender, text) {
+      const div = document.createElement("div");
+      div.className = "msg " + sender;
+      div.innerText = text;
+      document.getElementById("chat-area").appendChild(div);
+    }
+
+    function sendMsg() {
+      const input = document.getElementById("msg-input");
+      const msg = input.value.trim();
+      if (!msg) return;
+      appendMsg("you", "You: " + msg);
+      input.value = "";
+      setTimeout(() => {
+        appendMsg("bot", "Bot: " + autoReply(msg));
+      }, 1000);
+    }
+
+    function autoReply(text) {
+      const t = text.toLowerCase();
+      if (t.includes("hello") || t.includes("hi")) return "Hi there! 😊";
+      if (t.includes("love")) return "❤️ I love you too!";
+      return "Sorry, I am a bot!";
+    }
+  </script>
+</body>
+</html>
